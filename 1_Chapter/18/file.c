@@ -1,35 +1,51 @@
 #include <stdio.h>
 enum limit {LIMIT = 1000};
-void rmvTrailing(char s[], int len);
+int rmvTrailing(char s[], int len);
 
 int main(void)
 {
 	int c;
 	int i;
+	int newLen;
 	char line[1000];
-	while(i = 0; i < LIMIT - 1  && (c = getchar()) != EOF && c != '\n'; i++)
-	{	
-		line[i] = c;
-	}
-	if(c == '\n')
+	do
 	{
-		line[i] = '\n';
-	}
-	
+		for(i = 0; i < LIMIT - 1  && (c = getchar()) != EOF && c != '\n'; i++)
+		{	
+			line[i] = c;
+		}
+		if(c == '\n')
+		{
+			line[i] = '\n';
+			i++;
+		}
+		line[i] = '\0';
+		newLen = rmvTrailing(line, i);	
+		if(newLen > 0)
+		{
+			printf("%s", line);	
+		}
+	} while(i != 0);
 }
 
-void rmvTrailing(char s[], int len)
+int rmvTrailing(char s[], int len)
 {
-	for(int i = len;  i >= 0; i--)
+	int i = len;
+
+	while(i >= 0)
 	{
-		if(c == '\n' || c == ' ' || c == '\t' || c == '\0')
+		if(s[i] == '\n' || s[i] == ' ' || s[i] == '\t' || s[i] == '\0')
 		{
-			continue;
+			i--;
 		}
 		else
 		{
-			s[i] = '\0';
+			i++;
+			s[i] = '\n';
+			s[i+1] = '\0';
 			break;
 		}	
 	}
+
+	return i;
 }
